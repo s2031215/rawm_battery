@@ -10,6 +10,19 @@ The tray icon *is* the percentage: a big, color-coded number that updates
 automatically, refreshed by talking directly to the **RAWM Receiver** USB
 dongle over HID.
 
+## Download
+
+the ready-to-run exe is on the
+[**GitHub Releases**](https://github.com/s2031215/rawm_battery/releases) page:
+
+- **[`RAWM.SA-MH01-v1.0.0-x64.exe`](https://github.com/s2031215/rawm_battery/releases/download/v1.0.0/RAWM.SA-MH01-v1.0.0-x64.exe)**
+  (v1.0.0, ~28 MB) — fully self-contained (Python runtime + all dependencies
+  packed inside), no install required: download, copy anywhere and
+  double-click.
+
+For the newest version, always check the
+[Releases page](https://github.com/s2031215/rawm_battery/releases/latest).
+
 ## What it does
 
 | Feature | Detail |
@@ -39,7 +52,9 @@ dongle over HID.
 
 ### Packaged app (recommended)
 
-1. Double-click **`dist\RAWM SA-MH01.exe`** — or `rawm_tray.bat`, or the
+1. Download **`RAWM.SA-MH01-v1.0.0-x64.exe`** from
+   [GitHub Releases](https://github.com/s2031215/rawm_battery/releases/latest)
+   and double-click it — or start it via `rawm_tray.bat` or the
    **"RAWM SA-MH01"** Start Menu entry.
 2. A balloon confirms the first reading; the percentage appears in the tray
    (new tray icons start hidden behind the **`^` overflow chevron** — drag it
@@ -127,7 +142,7 @@ Windows power events (`WM_POWERBROADCAST`: system resume +
 | `rawm_tray.py` | Tray app (icon, menu, notifications, refresh schedule) |
 | `rawm_power.py` | Resume / screen-on event watcher |
 | `requirements.txt` | Python dependencies (runtime + build), pinned versions |
-| `dist\RAWM SA-MH01.exe` | Packaged app |
+| `dist` | Packaged app |
 | `rawm_tray.bat` | Launcher for the exe |
 | `setup_shortcut.ps1` | Creates Start Menu + Startup shortcuts |
 | `rawm.ico` | App/shortcut icon |
