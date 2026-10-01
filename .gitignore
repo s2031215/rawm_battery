@@ -1,0 +1,27 @@
+# Build & generated artifacts
+dist/
+build/
+.next/
+coverage/
+*.min.js
+*.map
+package-lock.json      # keep in git, exclude from AI context if huge
+yarn.lock              # same
+*.log
+logs/
+.cache/
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+*credentials*.json
+*serviceaccount*.json
+.aws/
+.gcloud/
+.ssh/
+*.pfx
+secrets/

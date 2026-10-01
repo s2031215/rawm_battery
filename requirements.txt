@@ -1,0 +1,9 @@
+# RAWM SA-MH01 Battery Monitor — Python dependencies
+#
+# Runtime (tray app rawm_tray.py + CLI rawm_battery.py):
+hidapi==0.15.0      # HID access to the RAWM Receiver dongle (module `hid`)
+pystray==0.19.5     # system-tray icon and menu
+Pillow==12.1.1      # renders the percentage tray icon
+
+# Build tool (only needed to rebuild dist\RAWM SA-MH01.exe, see README):
+pyinstaller==6.20.0
