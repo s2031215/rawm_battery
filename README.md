@@ -1,6 +1,7 @@
 # RAWM SA-MH01 Battery Monitor
 
-![Screenshot](./Screenshot-1.png)
+![Screenshot1](./Screenshot/Screenshot-1.png)
+![Screenshot2](./Screenshot/Screenshot-2.png)
 
 A Windows system-tray app (plus a small CLI) that shows the **battery level of
 the RAWM SA-MH01 wireless mouse** right in your taskbar — no official RAWM HUB
@@ -15,13 +16,10 @@ dongle over HID.
 the ready-to-run exe is on the
 [**GitHub Releases**](https://github.com/s2031215/rawm_battery/releases) page:
 
-- **[`RAWM.SA-MH01-v1.0.0-x64.exe`](https://github.com/s2031215/rawm_battery/releases/download/v1.0.0/RAWM.SA-MH01-v1.0.0-x64.exe)**
-  (v1.0.0, ~28 MB) — fully self-contained (Python runtime + all dependencies
+- **[`RAWM.SA-MH01-v1.0.1-x64.exe`](https://github.com/s2031215/rawm_battery/releases/download/v1.0.0/RAWM.SA-MH01-v1.0.1-x64.exe)**
+  — fully self-contained (Python runtime + all dependencies
   packed inside), no install required: download, copy anywhere and
   double-click.
-
-For the newest version, always check the
-[Releases page](https://github.com/s2031215/rawm_battery/releases/latest).
 
 ## What it does
 
@@ -53,7 +51,7 @@ For the newest version, always check the
 
 ### Packaged app (recommended)
 
-1. Download **`RAWM.SA-MH01-v1.0.0-x64.exe`** from
+1. Download exe file from
    [GitHub Releases](https://github.com/s2031215/rawm_battery/releases/latest)
    and double-click it.
 2. A balloon confirms the first reading; the percentage appears in the tray
