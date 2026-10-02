@@ -1,3 +1,8 @@
+[![Release](https://img.shields.io/github/v/release/s2031215/rawm_battery?logo=github)](https://github.com/s2031215/rawm_battery/releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/s2031215/rawm_battery/total?label=downloads)](https://github.com/s2031215/rawm_battery/releases/latest)
+![Platform](https://img.shields.io/badge/platform-Windows%2010%20%7C%2011-0078D6?logo=windows95&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.9%2B-3776AB?logo=python&logoColor=white)
+
 # RAWM SA-MH01 Battery Monitor
 
 ![Screenshot1](./Screenshot/Screenshot-1.png)
@@ -16,7 +21,7 @@ dongle over HID.
 the ready-to-run exe is on the
 [**GitHub Releases**](https://github.com/s2031215/rawm_battery/releases) page:
 
-- **[`RAWM.SA-MH01-v1.0.1-x64.exe`](https://github.com/s2031215/rawm_battery/releases/download/v1.0.0/RAWM.SA-MH01-v1.0.1-x64.exe)**
+- **[`RAWM.SA-MH01-v1.0.1-x64.exe`](https://github.com/s2031215/rawm_battery/releases/download/v1.0.1/RAWM.SA-MH01-v1.0.1-x64.exe)**
   — fully self-contained (Python runtime + all dependencies
   packed inside), no install required: download, copy anywhere and
   double-click.
