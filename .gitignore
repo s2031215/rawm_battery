@@ -1,6 +1,8 @@
 # Build & generated artifacts
 dist/
 build/
+__pycache__/
+*.pyc
 .next/
 coverage/
 *.min.js

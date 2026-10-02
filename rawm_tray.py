@@ -12,10 +12,12 @@ Run:
     pythonw rawm_tray.py                 # refresh every 30 minutes, no console
     pythonw rawm_tray.py --interval 15   # refresh every 15 minutes
 
-Tray menu: status line, "Refresh now", "Exit". A low-battery balloon fires
-once per app run when the battery is below the alert threshold (default 20%;
-change it in the tray menu under "Notify below" — the choice persists in
-%APPDATA%\RAWM\tray_config.json).
+Tray menu: status line, "Refresh now", "Notify below", "Start with Windows",
+"Exit". A low-battery balloon fires once per app run when the battery is
+below the alert threshold (default 20%; change it in the tray menu under
+"Notify below" — the choice persists in %APPDATA%\RAWM\tray_config.json).
+"Start with Windows" toggles a per-user registry Run entry (see
+rawm_autostart.py).
 """
 
 import argparse
@@ -30,6 +32,7 @@ from datetime import datetime
 from PIL import Image, ImageDraw, ImageFont
 from pystray import Icon, Menu, MenuItem
 
+import rawm_autostart
 import rawm_battery
 import rawm_power
 
@@ -59,13 +62,13 @@ def _save_config(config):
             json.dump(config, f)
     except OSError:
         pass  # persistence is best-effort; defaults still apply this run
-APP_USER_MODEL_ID = "RAWM.SAMH01.Tray"  # matches RAWM SA-MH01.lnk in Start Menu
+APP_USER_MODEL_ID = "RAWM.SAMH01.Tray"  # stable identity for notifications
 
 
 def _set_app_id():
-    """Claim our AppUserModelID so notifications show 'RAWM SA-MH01', not
-    'Python'. The matching Start Menu shortcut (setup_shortcut.ps1) carries
-    the same System.AppUserModel.ID property."""
+    """Claim our AppUserModelID so notifications group under one app identity.
+    Cosmetic only: the packaged exe already shows 'RAWM SA-MH01' via its
+    embedded FileDescription; this mainly helps runs from source."""
     try:
         ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(APP_USER_MODEL_ID)
     except Exception:
@@ -260,6 +263,20 @@ def build(interval_min=DEFAULT_INTERVAL_MIN):
             monitor.set_notify_level(level)
         return action
 
+    def toggle_autostart(icon, item):
+        try:
+            if rawm_autostart.is_enabled():
+                rawm_autostart.disable()
+                icon.notify("RAWM SA-MH01 will no longer start with Windows.", "RAWM battery")
+            else:
+                rawm_autostart.enable()
+                icon.notify("RAWM SA-MH01 will start with Windows.", "RAWM battery")
+        except OSError as e:
+            try:
+                icon.notify(f"Could not change autostart: {e}", "RAWM battery")
+            except Exception:
+                pass  # notification is best-effort
+
     notify_menu = Menu(*[
         MenuItem(
             f"{level}%", set_level(level), radio=True,
@@ -272,6 +289,11 @@ def build(interval_min=DEFAULT_INTERVAL_MIN):
         MenuItem(lambda item: monitor.status_text(), None, enabled=False),
         MenuItem("Refresh now", start_refresh),
         MenuItem("Notify below", notify_menu),
+        MenuItem(
+            "Start with Windows", toggle_autostart,
+            # re-read on every menu open so external changes are reflected
+            checked=lambda item: rawm_autostart.is_enabled(),
+        ),
         Menu.SEPARATOR,
         MenuItem("Exit", lambda icon, item: icon.stop()),
     )

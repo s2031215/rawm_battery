@@ -32,6 +32,7 @@ For the newest version, always check the
 | Failed-read retry | If the mouse is asleep/offline, retries every 5 min instead of waiting a full interval |
 | Low-battery alert | One balloon notification per app run when battery < threshold while discharging (default 20 %) |
 | Adjustable alert level | Tray menu → **Notify below** → 10 / 15 / 20 / 25 / 30 % (persisted in `%APPDATA%\RAWM\tray_config.json`) |
+| Start with Windows | Tray menu → **Start with Windows** toggle — per-user registry Run key, no admin rights needed |
 | Device info | Firmware, sensor (e.g. PAW3395), DPI stages, polling rate via `--json` |
 | Single instance | Launching it twice won't duplicate the tray icon |
 
@@ -54,14 +55,13 @@ For the newest version, always check the
 
 1. Download **`RAWM.SA-MH01-v1.0.0-x64.exe`** from
    [GitHub Releases](https://github.com/s2031215/rawm_battery/releases/latest)
-   and double-click it — or start it via `rawm_tray.bat` or the
-   **"RAWM SA-MH01"** Start Menu entry.
+   and double-click it.
 2. A balloon confirms the first reading; the percentage appears in the tray
    (new tray icons start hidden behind the **`^` overflow chevron** — drag it
    onto the taskbar, or enable it in *Taskbar settings → Select which icons
    appear on the taskbar*).
-3. To start it at every login, run `setup_shortcut.ps1` (also creates the
-   Start Menu entry) — or copy a shortcut into `shell:startup` yourself.
+3. To start it at every login, tick **Start with Windows** in the tray menu
+   (per-user registry Run entry — no admin rights needed).
 
 Tray menu:
 
@@ -69,6 +69,9 @@ Tray menu:
 - **Refresh now** — force an immediate re-read and show the result as a
   notification (the failure reason if the mouse didn't answer)
 - **Notify below** — choose the low-battery alert threshold (10–30 %)
+- **Start with Windows** — tick to launch the app automatically at login
+  (re-reads the actual registry/shortcut state every time the menu opens;
+  unticking also removes a Startup-folder shortcut left by older versions)
 - **Exit**
 
 ### CLI
@@ -100,11 +103,11 @@ doesn't answer within the timeout (move/click the mouse to wake it and retry).
 ```bat
 pip install -r requirements.txt
 
-python -m PyInstaller --noconfirm --clean --onefile --windowed ^
-    --name "RAWM SA-MH01" ^
-    --icon rawm.ico ^
-    --version-file version.txt ^
-    --hidden-import pystray._win32 ^
+python -m PyInstaller --noconfirm --clean --onefile --windowed \
+    --name "RAWM SA-MH01" \
+    --icon rawm.ico \
+    --version-file version.txt \
+    --hidden-import pystray._win32 \
     rawm_tray.py
 ```
 
@@ -113,8 +116,6 @@ python -m PyInstaller --noconfirm --clean --onefile --windowed ^
   shows as the notification app name ("RAWM SA-MH01" instead of "Python").
 - **Kill a running `RAWM SA-MH01.exe` first** — the build can't overwrite a
   locked file.
-- `setup_shortcut.ps1` recreates the Start Menu + Startup shortcuts after
-  building.
 
 ## How it works
 
@@ -141,13 +142,13 @@ Windows power events (`WM_POWERBROADCAST`: system resume +
 | `rawm_battery.py` | HID protocol + CLI (`read_battery()`, `watch()`) |
 | `rawm_tray.py` | Tray app (icon, menu, notifications, refresh schedule) |
 | `rawm_power.py` | Resume / screen-on event watcher |
+| `rawm_autostart.py` | Start-with-Windows registry Run-key toggle |
 | `requirements.txt` | Python dependencies (runtime + build), pinned versions |
 | `dist` | Packaged app |
-| `rawm_tray.bat` | Launcher for the exe |
-| `setup_shortcut.ps1` | Creates Start Menu + Startup shortcuts |
-| `rawm.ico` | App/shortcut icon |
+| `rawm.ico` | App icon |
 | `version.txt` | exe version metadata (notification app name) |
 | `test_power_watch.py` | Component test for the power watcher |
+| `test_autostart.py` | Component test for the autostart toggle |
 
 ## Troubleshooting
 

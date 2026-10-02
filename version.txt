@@ -12,13 +12,13 @@ VSVersionInfo(
   kids=[
     StringFileInfo([
       StringTable('040904B0', [
-        StringStruct('CompanyName', 'RAWM'),
-        StringStruct('FileDescription', 'RAWM SA-MH01'),
+        StringStruct('CompanyName', 's2031215'),
+        StringStruct('FileDescription', 'RAWM SA-MH01 Battery Monitor'),
         StringStruct('FileVersion', '1.1.1'),
         StringStruct('InternalName', 'RAWM SAMH01 Tray'),
         StringStruct('OriginalFilename', 'RAWM SA-MH01.exe'),
-        StringStruct('ProductName', 'RAWM SA-MH01'),
-        StringStruct('ProductVersion', '1.1.1')
+        StringStruct('ProductName', 'RAWM SA-MH01 Battery Monitor'),
+        StringStruct('ProductVersion', '1.0.2')
       ])
     ]),
     VarFileInfo([VarStruct('Translation', [1033, 1200])])
