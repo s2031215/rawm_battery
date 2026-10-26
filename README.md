@@ -3,6 +3,8 @@
 ![Platform](https://img.shields.io/badge/platform-Windows%2010%20%7C%2011-0078D6?logo=windows95&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3.9%2B-3776AB?logo=python&logoColor=white)
 
+**English** | <a href="README.zh-CN.md">简体中文</a>
+
 # RAWM SA-MH01 Battery Monitor
 
 ![Screenshot1](./Screenshot/Screenshot-1.png)
@@ -19,12 +21,7 @@ dongle over HID.
 ## Download
 
 the ready-to-run exe is on the
-[**GitHub Releases**](https://github.com/s2031215/rawm_battery/releases) page:
-
-- **[`RAWM.SA-MH01-v1.0.1-x64.exe`](https://github.com/s2031215/rawm_battery/releases/download/v1.0.1/RAWM.SA-MH01-v1.0.1-x64.exe)**
-  — fully self-contained (Python runtime + all dependencies
-  packed inside), no install required: download, copy anywhere and
-  double-click.
+[**GitHub Releases**](https://github.com/s2031215/rawm_battery/releases) page
 
 ## What it does
 
@@ -66,15 +63,17 @@ the ready-to-run exe is on the
 3. To start it at every login, tick **Start with Windows** in the tray menu
    (per-user registry Run entry — no admin rights needed).
 
-Tray menu:
+Tray menu (right-click):
 
 - **status line** — current %, charging state, last update time, retry info
-- **Refresh now** — force an immediate re-read and show the result as a
-  notification (the failure reason if the mouse didn't answer)
+- **Refresh now** *(default, bold — also runs on a plain left-click of the
+  icon)* — force an immediate re-read and show the result as a notification
+  (the failure reason if the mouse didn't answer)
 - **Notify below** — choose the low-battery alert threshold (10–30 %)
 - **Start with Windows** — tick to launch the app automatically at login
   (re-reads the actual registry/shortcut state every time the menu opens;
   unticking also removes a Startup-folder shortcut left by older versions)
+- **version line** — app version (kept in sync with `rawm_battery.spec`)
 - **Exit**
 
 ### CLI
@@ -106,18 +105,16 @@ doesn't answer within the timeout (move/click the mouse to wake it and retry).
 ```bat
 pip install -r requirements.txt
 
-python -m PyInstaller --noconfirm --clean --onefile --windowed \
-    --name "RAWM SA-MH01" \
-    --icon rawm.ico \
-    --version-file version.txt \
-    --hidden-import pystray._win32 \
-    rawm_tray.py
+python -m PyInstaller --noconfirm --clean rawm_battery.spec
 ```
 
-- Output: `dist\RAWM SA-MH01.exe` (single file, no Python needed on the target).
+- One shared spec for every release: bump `VERSION` at the top of
+  `rawm_battery.spec` (keep `version.txt` in sync) and rebuild — output is
+  `dist\RAWM.SA-MH01-v<VERSION>-x64.exe` (single file, no Python needed on
+  the target).
 - `version.txt` sets the exe metadata — its `FileDescription` is what Windows
   shows as the notification app name ("RAWM SA-MH01" instead of "Python").
-- **Kill a running `RAWM SA-MH01.exe` first** — the build can't overwrite a
+- **Kill a running copy of the exe first** — the build can't overwrite a
   locked file.
 
 ## How it works
@@ -150,6 +147,7 @@ Windows power events (`WM_POWERBROADCAST`: system resume +
 | `dist` | Packaged app |
 | `rawm.ico` | App icon |
 | `version.txt` | exe version metadata (notification app name) |
+| `rawm_battery.spec` | Shared PyInstaller spec (bump `VERSION` per release) |
 | `test_power_watch.py` | Component test for the power watcher |
 | `test_autostart.py` | Component test for the autostart toggle |
 

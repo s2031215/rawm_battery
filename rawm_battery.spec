@@ -1,5 +1,10 @@
 # -*- mode: python ; coding: utf-8 -*-
 
+# Shared build spec — one file for every release. Bump VERSION here (and in
+# version.txt and APP_VERSION in rawm_tray.py) and rebuild with:
+#     python -m PyInstaller --noconfirm rawm_battery.spec
+
+VERSION = "1.0.2"
 
 a = Analysis(
     ['rawm_tray.py'],
@@ -22,7 +27,7 @@ exe = EXE(
     a.binaries,
     a.datas,
     [],
-    name='RAWM SA-MH01',
+    name=f'RAWM.SA-MH01-v{VERSION}-x64',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,

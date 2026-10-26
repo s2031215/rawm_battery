@@ -13,11 +13,12 @@ Run:
     pythonw rawm_tray.py --interval 15   # refresh every 15 minutes
 
 Tray menu: status line, "Refresh now", "Notify below", "Start with Windows",
-"Exit". A low-battery balloon fires once per app run when the battery is
-below the alert threshold (default 20%; change it in the tray menu under
-"Notify below" — the choice persists in %APPDATA%\RAWM\tray_config.json).
-"Start with Windows" toggles a per-user registry Run entry (see
-rawm_autostart.py).
+version line, "Exit". Left-clicking the tray icon runs "Refresh now" (the
+default action): re-read the battery and show the result as a notification.
+A low-battery balloon fires once per app run when the battery is below the
+alert threshold (default 20%; change it in the tray menu under "Notify
+below" — the choice persists in %APPDATA%\RAWM\tray_config.json). "Start
+with Windows" toggles a per-user registry Run entry (see rawm_autostart.py).
 """
 
 import argparse
@@ -37,6 +38,7 @@ import rawm_battery
 import rawm_power
 
 DEFAULT_INTERVAL_MIN = 30
+APP_VERSION = "1.0.2"  # keep in sync with rawm_battery.spec and version.txt
 RETRY_INTERVAL_MIN = 5  # after a failed refresh, retry sooner than the full interval
 DEFAULT_NOTIFY_LEVEL = 20
 NOTIFY_LEVEL_CHOICES = (10, 15, 20, 25, 30)
@@ -287,7 +289,8 @@ def build(interval_min=DEFAULT_INTERVAL_MIN):
 
     menu = Menu(
         MenuItem(lambda item: monitor.status_text(), None, enabled=False),
-        MenuItem("Refresh now", start_refresh),
+        # default=True: also runs when the tray icon is left-clicked
+        MenuItem("Refresh now", start_refresh, default=True),
         MenuItem("Notify below", notify_menu),
         MenuItem(
             "Start with Windows", toggle_autostart,
@@ -295,6 +298,7 @@ def build(interval_min=DEFAULT_INTERVAL_MIN):
             checked=lambda item: rawm_autostart.is_enabled(),
         ),
         Menu.SEPARATOR,
+        MenuItem(f"v{APP_VERSION}", None, enabled=False),
         MenuItem("Exit", lambda icon, item: icon.stop()),
     )
     icon = Icon("rawm_battery", make_icon(), "RAWM SA-MH01 battery", menu)

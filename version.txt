@@ -1,7 +1,7 @@
 VSVersionInfo(
   ffi=FixedFileInfo(
-    filevers=(1, 1, 1, 0),
-    prodvers=(1, 1, 1, 0),
+    filevers=(1, 0, 2, 0),
+    prodvers=(1, 0, 2, 0),
     mask=0x3f,
     flags=0x0,
     OS=0x40004,
@@ -14,9 +14,9 @@ VSVersionInfo(
       StringTable('040904B0', [
         StringStruct('CompanyName', 's2031215'),
         StringStruct('FileDescription', 'RAWM SA-MH01 Battery Monitor'),
-        StringStruct('FileVersion', '1.1.1'),
+        StringStruct('FileVersion', '1.0.2'),
         StringStruct('InternalName', 'RAWM SAMH01 Tray'),
-        StringStruct('OriginalFilename', 'RAWM SA-MH01.exe'),
+        StringStruct('OriginalFilename', 'RAWM.SA-MH01-v1.0.2-x64.exe'),
         StringStruct('ProductName', 'RAWM SA-MH01 Battery Monitor'),
         StringStruct('ProductVersion', '1.0.2')
       ])
